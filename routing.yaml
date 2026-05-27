@@ -1,0 +1,75 @@
+# routing.yaml
+# repos     - 所有要下载的仓库
+# routing   - 每个 suite 的包匹配规则
+#             pattern:  包名 glob，版本号位用 * 占位
+#             version:  auto = 拉最新版本, 指定数字 = 锁定版本
+#             不写 version 默认就是 auto
+
+repos:
+  - Roboparty/roboparty_base
+  - wentywenty/roboparty_description
+  - wentywenty/roboparty_deploy
+  - wentywenty/roboparty_motors
+  - wentywenty/roboparty_all
+  - Roboparty/roboparty_example
+  - wentywenty/roboparty_imu
+  - Roboparty/roboparty_bms
+  - wentywenty/roboparty_inference
+  - wentywenty/soem-deb
+  - wentywenty/robopi_firmware
+  - wentywenty/roboparty_image
+  - wentywenty/zlg-deb
+  - wentywenty/f81601a-deb
+
+routing:
+  common:
+    - pattern: "roboparty-base_*_all.deb"
+    - pattern: "roboparty-description_*_all.deb"
+    - pattern: "roboparty-deploy_*_all.deb"
+    - pattern: "roboparty-example_*_all.deb"
+    - pattern: "roboparty-all_*_all.deb"
+
+    - pattern: "roboparty-motors_*_amd64.deb"
+    - pattern: "roboparty-motors_*_arm64.deb"
+    - pattern: "roboparty-imu_*_amd64.deb"
+    - pattern: "roboparty-imu_*_arm64.deb"
+    - pattern: "roboparty-bms_*_amd64.deb"
+    - pattern: "roboparty-bms_*_arm64.deb"
+    - pattern: "roboparty-inference_*_amd64.deb"
+    - pattern: "roboparty-inference_*_arm64.deb"
+
+    - pattern: "libsoem-dev_*_amd64.deb"
+    - pattern: "libsoem-dev_*_arm64.deb"
+    - pattern: "orangepi-firmware_*_arm64.deb"
+
+    - pattern: "f81601a-dkms_*_all.deb"
+    - pattern: "usbcanfd-dkms_*_all.deb"
+
+  robopi1:
+    - pattern: "ethercat-igh_*-rockchip-rk3588_arm64.deb"
+      version: 1.7.1-6.1.99-rt36
+    - pattern: "linux-u-boot-current-robopi1_*_arm64.deb"
+      version: 1.2.7
+    - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.2.7
+    - pattern: "linux-dtb-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.2.7
+    - pattern: "linux-headers-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.2.7
+    - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
+      version: 1.2.7
+
+  robopi2:
+    - pattern: "ethercat-igh_*-rockchip-rk3588_arm64.deb"
+      version: 1.7.1-6.1.99-rt36
+    - pattern: "linux-u-boot-current-robopi2_*_arm64.deb"
+      version: 1.0.8
+    - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.0.8
+    - pattern: "linux-dtb-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.0.8
+    - pattern: "linux-headers-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.0.8
+    - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
+      version: 1.0.8
+      
