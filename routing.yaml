@@ -7,16 +7,16 @@
 
 repos:
   - Roboparty/roboparty_base
-  - wentywenty/roboparty_description
-  - wentywenty/roboparty_deploy
+  - Roboparty/roboparty_description
+  - Roboparty/roboparty_go
   - wentywenty/roboparty_motors
-  - wentywenty/roboparty_all
+  - Roboparty/roboparty_all
   - Roboparty/roboparty_example
   - wentywenty/roboparty_imu
   - Roboparty/roboparty_bms
   - wentywenty/roboparty_inference
   - wentywenty/soem-deb
-  - wentywenty/robopi_firmware
+  - Roboparty/robopi_firmware
   - wentywenty/roboparty_image
   - wentywenty/zlg-deb
   - wentywenty/f81601a-deb
@@ -25,7 +25,7 @@ routing:
   common:
     - pattern: "roboparty-base_*_all.deb"
     - pattern: "roboparty-description_*_all.deb"
-    - pattern: "roboparty-deploy_*_all.deb"
+    - pattern: "roboparty-go_*_all.deb"
     - pattern: "roboparty-example_*_all.deb"
     - pattern: "roboparty-all_*_all.deb"
 
