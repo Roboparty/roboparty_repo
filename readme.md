@@ -4,7 +4,7 @@ RoboParty APT 源自动化管理仓库。
 
 **两台自建 Runner：**
 - **公网 APT 服务器** — 运行 `sync-and-inject.yml`，从 GitHub Release 拉取 `.deb` → 直接在本机入库
-- **RK3588 编译服务器** — 运行 4 路 Runner（motors / imu / bms / inference），只编译 C++ 包
+- **RK3588 编译服务器** — 单实例 org 级 Runner，四个 C++ 包的 job 排队串行编译
 
 ---
 
@@ -75,18 +75,6 @@ routing:
 
 ---
 
-## 编译 Runner 管理
-
-RK3588 编译服务器通过 tmux 管理 4 路 Runner：
-
-```bash
-./actions/start_runners.sh    # 启动 motors / imu / bms / inference
-./actions/stop_runners.sh     # 关闭全部
-tmux a -t github-runners      # 查看实时日志
-```
-
----
-
 ## 第三步：用户安装
 
 ```bash
@@ -108,17 +96,25 @@ sudo apt-get install roboparty-motors
 
 ---
 
+## 编译看板
+
+`dashboard.yml` 每小时拉取 routing.yaml 中所有仓库的最新 Actions 状态。
+
+所有仓库均为 public，无需额外配置 token。
+
+---
+
 ## 文件结构
 
 ```
 roboparty_repo/
-├── .github/workflows/sync-and-inject.yml   # APT 服务器 workflow
-├── actions/
-│   ├── start_runners.sh                    # 启动编译 Runner
-│   └── stop_runners.sh                     # 关闭编译 Runner
+├── .github/workflows/
+│   ├── sync-and-inject.yml                  # APT 入库 workflow
+│   └── dashboard.yml                        # 编译状态看板
 ├── scripts/
-│   ├── route_debs.py                       # 下载并分拣 deb
-│   └── bot_inject.sh                       # reprepro 入库脚本
-├── routing.yaml                            # 仓库及路由规则
-└── env                                     # 代理等环境变量（gitignore）
+│   ├── route_debs.py                        # 下载并分拣 deb
+│   ├── bot_inject.sh                        # reprepro 入库脚本
+│   └── dashboard.py                         # 看板脚本
+├── routing.yaml                             # 仓库及路由规则
+└── env                                      # 代理等环境变量（gitignore）
 ```
