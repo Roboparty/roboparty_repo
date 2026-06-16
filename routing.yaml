@@ -15,6 +15,7 @@ repos:
   - wentywenty/roboparty_imu
   - Roboparty/roboparty_bms
   - wentywenty/roboparty_inference
+  - Roboparty/roboparty_rp_server
   - wentywenty/soem-deb
   - Roboparty/robopi_firmware
   - wentywenty/roboparty_image
@@ -37,6 +38,7 @@ routing:
     - pattern: "roboparty-bms_*_arm64.deb"
     - pattern: "roboparty-inference_*_amd64.deb"
     - pattern: "roboparty-inference_*_arm64.deb"
+    - pattern: "roboparty-rp-server_*_all.deb"
 
     - pattern: "libsoem-dev_*_amd64.deb"
     - pattern: "libsoem-dev_*_arm64.deb"

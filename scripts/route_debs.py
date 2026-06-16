@@ -18,6 +18,17 @@ TMP_DIR = 'tmp_debs'
 MANIFEST_FILE = 'manifest.json'
 
 
+def _deb_field(deb_path: str, field: str) -> str:
+    try:
+        r = subprocess.run(
+            ['dpkg-deb', '-f', deb_path, field],
+            capture_output=True, text=True, timeout=10,
+        )
+        return r.stdout.strip()
+    except Exception:
+        return "?"
+
+
 def download_all(repos):
     if os.path.exists(TMP_DIR):
         shutil.rmtree(TMP_DIR)
@@ -76,6 +87,39 @@ def route_all(routing, incoming):
     return manifest
 
 
+def print_version_summary(manifest):
+    """GitHub Actions log-friendly version table."""
+    print()
+    print('=' * 80)
+    print('  阶段 3: 版本汇总')
+    print('=' * 80)
+    print(f'{"Package":<32} {"Version":<18} {"Arch":<8} {"Suite":<12}')
+    print('-' * 80)
+
+    # Read from incoming/ since tmp_debs is already cleaned
+    incoming = os.path.join(os.getcwd(), 'incoming')
+    seen = set()
+    for item in manifest:
+        basename = item['deb']
+        key = basename.rsplit('_', 2)[0]  # package name
+        if key in seen:
+            continue
+        seen.add(key)
+        suite = ','.join(item['suites'])
+        for s in item['suites']:
+            deb_path = os.path.join(incoming, s, basename)
+            if os.path.isfile(deb_path):
+                pkg = _deb_field(deb_path, 'Package')
+                ver = _deb_field(deb_path, 'Version')
+                arch = _deb_field(deb_path, 'Architecture')
+                print(f'{pkg:<32} {ver:<18} {arch:<8} {suite:<12}')
+                break
+
+    print('-' * 80)
+    print(f'  共 {len(manifest)} 个 deb 包')
+    print('=' * 80)
+
+
 def main():
     if len(sys.argv) < 3:
         print('Usage: route_debs.py <routing.yaml> <incoming_dir>')
@@ -100,6 +144,8 @@ def main():
     print('  阶段 2: 按 routing.yaml 分拣')
     print('=' * 50)
     manifest = route_all(routing, incoming)
+
+    print_version_summary(manifest)
 
     shutil.rmtree(TMP_DIR, ignore_errors=True)
 
