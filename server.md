@@ -71,12 +71,12 @@ sudo mkdir -p /srv/apt/conf
 ```
 
 写入 `/srv/apt/conf/distributions`，**把所有的 `<KEY_ID>` 替换为步骤2拿到的 Key ID**：
-
+这个只是示例，别傻乎乎的写上去。。。。。
 ```
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: common
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty common packages
 SignWith: <KEY_ID>
@@ -84,7 +84,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: robopi1
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty RoboPi1 packages
 SignWith: <KEY_ID>
@@ -92,7 +92,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: robopi2
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty RoboPi2 packages
 SignWith: <KEY_ID>
@@ -100,7 +100,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: robopi3
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty RoboPi3 packages
 SignWith: <KEY_ID>
@@ -108,20 +108,20 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: x86
-Architectures: amd64 all source
+Architectures: amd64 source
 Components: main
 Description: RoboParty x86 packages
 SignWith: <KEY_ID>
 ```
 
-可用一条命令完成（在正确位置执行，`<KEY_ID>` 需提前替换）：
+可用一条命令完成（这个只是示例，别傻乎乎的写上去。。。。。在正确位置执行，`<KEY_ID>` 需提前替换）：
 
 ```bash
 sudo tee /srv/apt/conf/distributions > /dev/null <<'EOF'
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: common
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty common packages
 SignWith: <KEY_ID>
@@ -129,7 +129,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: robopi1
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty RoboPi1 packages
 SignWith: <KEY_ID>
@@ -137,7 +137,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: robopi2
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty RoboPi2 packages
 SignWith: <KEY_ID>
@@ -145,7 +145,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: robopi3
-Architectures: amd64 arm64 all source
+Architectures: amd64 arm64 source
 Components: main
 Description: RoboParty RoboPi3 packages
 SignWith: <KEY_ID>
@@ -153,7 +153,7 @@ SignWith: <KEY_ID>
 Origin: RoboParty
 Label: RoboParty APT Repository
 Codename: x86
-Architectures: amd64 all source
+Architectures: amd64 source
 Components: main
 Description: RoboParty x86 packages
 SignWith: <KEY_ID>
