@@ -9,16 +9,16 @@ repos:
   - Roboparty/roboparty_base
   - Roboparty/roboparty_description
   - Roboparty/roboparty_go
-  - wentywenty/roboparty_motors
+  - Roboparty/roboparty_motors
   - Roboparty/roboparty_all
   - Roboparty/roboparty_example
-  - wentywenty/roboparty_imu
+  - Roboparty/roboparty_imu
   - Roboparty/roboparty_bms
-  - wentywenty/roboparty_inference
+  - Roboparty/roboparty_inference
   - Roboparty/roboparty_rp_server
   - wentywenty/soem-deb
   - Roboparty/robopi_firmware
-  - wentywenty/roboparty_image
+  - Roboparty/roboparty_image
   - wentywenty/zlg-deb
   - wentywenty/f81601a-deb
 
