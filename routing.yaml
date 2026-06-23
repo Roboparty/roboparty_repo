@@ -16,9 +16,11 @@ repos:
   - Roboparty/roboparty_bms
   - Roboparty/roboparty_inference
   - Roboparty/roboparty_rp_server
+  - Roboparty/roboparty_ecatfd_master
   - Roboparty/roboparty_image
   - Roboparty/robopi_firmware
-  - wentywenty/soem-deb
+  - Roboparty/soem-deb
+  - Roboparty/igh-deb
   - wentywenty/zlg-deb
   - wentywenty/f81601a-deb
   - wentywenty/hpm-dfu-deb
@@ -40,18 +42,20 @@ routing:
     - pattern: "roboparty-inference_*_amd64.deb"
     - pattern: "roboparty-inference_*_arm64.deb"
     - pattern: "roboparty-rp-server_*_all.deb"
+    - pattern: "roboparty-ecatfd-master_*_amd64.deb"
+    - pattern: "roboparty-ecatfd-master_*_arm64.deb"
 
     - pattern: "libsoem-dev_*_amd64.deb"
     - pattern: "libsoem-dev_*_arm64.deb"
     - pattern: "orangepi-firmware_*_arm64.deb"
+    - pattern: "ethercat-igh_*_amd64.deb"
+    - pattern: "ethercat-igh_*_arm64.deb"
 
     - pattern: "f81601a-dkms_*_all.deb"
     - pattern: "usbcanfd-dkms_*_all.deb"
     - pattern: "hpm-manufacturing-tool_*_amd64.deb"
 
   robopi1:
-    - pattern: "ethercat-igh_*-rockchip-rk3588_arm64.deb"
-      version: 1.7.1-6.1.99-rt36
     - pattern: "linux-u-boot-current-robopi1_*_arm64.deb"
       version: 1.2.8
     - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
@@ -64,8 +68,6 @@ routing:
       version: 1.2.8
 
   robopi2:
-    - pattern: "ethercat-igh_*-rockchip-rk3588_arm64.deb"
-      version: 1.7.1-6.1.99-rt36
     - pattern: "linux-u-boot-current-robopi2_*_arm64.deb"
       version: 1.0.9
     - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"

@@ -2,10 +2,6 @@
 
 RoboParty APT 源自动化管理仓库。
 
-**两台自建 Runner：**
-- **公网 APT 服务器** — 运行 `sync-and-inject.yml`，从 GitHub Release 拉取 `.deb` → 直接在本机入库
-- **RK3588 编译服务器** — 单实例 org 级 Runner，四个 C++ 包的 job 排队串行编译
-
 ---
 
 ## 第一步：子仓库发版
@@ -25,6 +21,8 @@ git push origin HEAD --tags
 
 推送后子仓库自己的 Actions 会编译出 `.deb` 并创建 GitHub Release。
 
+> **注意**：CI 会校验 tag（如 `v2.1.1`）与 `debian/changelog` 中的版本号是否一致，不一致则构建直接失败。必须先用 `dch` 更新 changelog 再打 tag。
+
 ### 仅修改打包脚本（不打 tag）
 
 如果只改了 `debian/control`、`debian/rules` 等，源代码版本不变：
@@ -42,22 +40,23 @@ Actions 会生成 `.deb` Artifact 供测试，但不会发布 Release。
 
 ## 第二步：同步到 APT 源
 
-本仓库的工作流负责从各仓库 Release 拉包并入库。
-
-### 触发方式
-
-- **自动**：修改 `routing.yaml`、`scripts/route_debs.py` 或 `scripts/bot_inject.sh` 并 push
-- **手动**：在 Actions 页面点击 `Sync & Inject` → `Run workflow`
+在 APT 服务器上手动执行脚本，从各仓库 Release 拉包并入库。
 
 ### 流程
 
-```
-sync-and-inject.yml（公网 APT 服务器）
-  ├─ route_debs.py   → 从 GitHub Release 下载 .deb，按 routing.yaml 分拣到 /srv/apt-incoming/
-  └─ bot_inject.sh   → 调用 reprepro 将 /srv/apt-incoming/ 入库到 /srv/apt/
+```bash
+cd /path/to/roboparty_repo
+export GH_TOKEN=<GitHub Personal Access Token>
+python3 scripts/route_debs.py routing.yaml /srv/apt-incoming/
+bash scripts/bot_inject.sh
 ```
 
-无需 rsync 或 SSH——Runner 就是 APT 服务器本身。
+```
+route_debs.py  → 从 GitHub Release 下载 .deb，按 routing.yaml 分拣到 /srv/apt-incoming/
+bot_inject.sh  → 调用 reprepro 将 /srv/apt-incoming/ 入库到 /srv/apt/
+```
+
+服务器重建详见 [server.md](server.md)。
 
 ### routing.yaml 配置
 
@@ -79,12 +78,12 @@ routing:
 
 ```bash
 # 1. 导入 GPG 公钥
-sudo curl -fsSL "http://apt.roboparty.com/roboparty.gpg" | \
-  sudo gpg --dearmor -o /usr/share/keyrings/roboparty-archive-keyring.gpg
+sudo curl -fsSL "https://apt.roboparty.com/roboparty.gpg" | \
+  sudo gpg --dearmor --yes -o /usr/share/keyrings/roboparty-archive-keyring.gpg
 sudo chmod 644 /usr/share/keyrings/roboparty-archive-keyring.gpg
 
 # 2. 添加源（x86 用 amd64，arm64 改成 arm64）
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] http://apt.roboparty.com common main" | \
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/roboparty-archive-keyring.gpg] https://apt.roboparty.com common main" | \
   sudo tee /etc/apt/sources.list.d/roboparty.list
 
 # 3. 安装
@@ -116,5 +115,7 @@ roboparty_repo/
 │   ├── bot_inject.sh                        # reprepro 入库脚本
 │   └── dashboard.py                         # 看板脚本
 ├── routing.yaml                             # 仓库及路由规则
+├── distributions                            # reprepro 仓库配置（参考用）
+├── server.md                                # APT 服务器重建指南
 └── env                                      # 代理等环境变量（gitignore）
 ```
