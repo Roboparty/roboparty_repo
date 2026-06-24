@@ -13,6 +13,11 @@ APT_DIR="/srv/apt"
 INCOMING_DIR="/srv/apt-incoming"
 SUITES=("common" "robopi1" "robopi2" "robopi3" "x86")
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(dirname "$SCRIPT_DIR")"
+ROUTING="$REPO_DIR/routing.yaml"
+ROUTE_DEBS="$SCRIPT_DIR/route_debs.py"
+
 export PATH=$PATH:/usr/bin:/bin
 
 # 检查必备工具
@@ -29,6 +34,21 @@ echo " 时间: $(date)"
 echo "========================================"
 
 for suite in "${SUITES[@]}"; do
+    expected=$(python3 "$ROUTE_DEBS" --print-expected "$ROUTING" "$suite" 2>/dev/null)
+    if [ -n "$expected" ]; then
+        current=$(reprepro -b "$APT_DIR" list "$suite" 2>/dev/null | sed 's/^[^:]*: //' | awk '{print $1}' | sort -u)
+        if [ -n "$current" ]; then
+            stale=$(comm -23 <(echo "$current") <(echo "$expected"))
+            if [ -n "$stale" ]; then
+                while IFS= read -r pkg; do
+                    [ -z "$pkg" ] && continue
+                    echo "🧹 清理残留包: $pkg ($suite)"
+                    reprepro -b "$APT_DIR" remove "$suite" "$pkg" >/dev/null 2>&1
+                done <<< "$stale"
+            fi
+        fi
+    fi
+
     shopt -s nullglob
     debs=("$INCOMING_DIR/$suite"/*.deb)
     shopt -u nullglob

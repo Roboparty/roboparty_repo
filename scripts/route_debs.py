@@ -121,6 +121,25 @@ def print_version_summary(manifest):
 
 
 def main():
+    if '--print-expected' in sys.argv:
+        idx = sys.argv.index('--print-expected')
+        if idx + 2 >= len(sys.argv):
+            print('Usage: route_debs.py --print-expected <routing.yaml> <suite>', file=sys.stderr)
+            sys.exit(1)
+        config_path = sys.argv[idx + 1]
+        suite = sys.argv[idx + 2]
+        with open(config_path) as f:
+            config = yaml.safe_load(f)
+        routing = config.get('routing', {})
+        if suite in routing:
+            packages = set()
+            for entry in routing[suite]:
+                pkg = entry['pattern'].split('_*')[0]
+                packages.add(pkg)
+            for pkg in sorted(packages):
+                print(pkg)
+        sys.exit(0)
+
     if len(sys.argv) < 3:
         print('Usage: route_debs.py <routing.yaml> <incoming_dir>')
         sys.exit(1)
