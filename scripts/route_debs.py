@@ -87,7 +87,7 @@ def route_all(routing, incoming):
     return manifest
 
 
-def print_version_summary(manifest):
+def print_version_summary(manifest, incoming):
     """GitHub Actions log-friendly version table."""
     print()
     print('=' * 80)
@@ -95,9 +95,6 @@ def print_version_summary(manifest):
     print('=' * 80)
     print(f'{"Package":<32} {"Version":<18} {"Arch":<8} {"Suite":<12}')
     print('-' * 80)
-
-    # Read from incoming/ since tmp_debs is already cleaned
-    incoming = os.path.join(os.getcwd(), 'incoming')
     seen = set()
     for item in manifest:
         basename = item['deb']
@@ -164,7 +161,7 @@ def main():
     print('=' * 50)
     manifest = route_all(routing, incoming)
 
-    print_version_summary(manifest)
+    print_version_summary(manifest, incoming)
 
     shutil.rmtree(TMP_DIR, ignore_errors=True)
 
