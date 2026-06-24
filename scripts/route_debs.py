@@ -95,13 +95,8 @@ def print_version_summary(manifest, incoming):
     print('=' * 80)
     print(f'{"Package":<32} {"Version":<18} {"Arch":<8} {"Suite":<12}')
     print('-' * 80)
-    seen = set()
     for item in manifest:
         basename = item['deb']
-        key = basename.rsplit('_', 2)[0]  # package name
-        if key in seen:
-            continue
-        seen.add(key)
         suite = ','.join(item['suites'])
         for s in item['suites']:
             deb_path = os.path.join(incoming, s, basename)
