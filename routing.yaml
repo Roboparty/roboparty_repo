@@ -14,11 +14,13 @@ repos:
   - Roboparty/roboparty_example
   - Roboparty/roboparty_imu
   - Roboparty/roboparty_bms
+  - Roboparty/roboparty_hand
   - Roboparty/roboparty_inference
   - Roboparty/roboparty_rp_server
   - Roboparty/roboparty_ecatfd_master
   - Roboparty/roboparty_image
   - Roboparty/robopi_firmware
+  - Roboparty/robopi-config
   - Roboparty/soem-deb
   - Roboparty/igh-deb
   - wentywenty/zlg-deb
@@ -39,6 +41,8 @@ routing:
     - pattern: "roboparty-imu_*_arm64.deb"
     - pattern: "roboparty-bms_*_amd64.deb"
     - pattern: "roboparty-bms_*_arm64.deb"
+    - pattern: "roboparty-hand_*_amd64.deb"
+    - pattern: "roboparty-hand_*_arm64.deb"
     - pattern: "roboparty-inference_*_amd64.deb"
     - pattern: "roboparty-inference_*_arm64.deb"
     - pattern: "roboparty-rp-server_*_all.deb"
@@ -48,6 +52,7 @@ routing:
     - pattern: "libsoem-dev_*_amd64.deb"
     - pattern: "libsoem-dev_*_arm64.deb"
     - pattern: "orangepi-firmware_*_arm64.deb"
+    - pattern: "robopi-config_*_arm64.deb"
     - pattern: "ethercat-igh_*_amd64.deb"
     - pattern: "ethercat-igh_*_arm64.deb"
 
