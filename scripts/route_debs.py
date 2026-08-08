@@ -29,17 +29,25 @@ def _deb_field(deb_path: str, field: str) -> str:
         return "?"
 
 
+DEFAULT_PROXY = 'http://127.0.0.1:7890'
+
+
 def download_all(repos):
     if os.path.exists(TMP_DIR):
         shutil.rmtree(TMP_DIR)
     os.makedirs(TMP_DIR)
+
+    env = dict(os.environ)
+    if not any(k in os.environ for k in ('HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy')):
+        env['HTTPS_PROXY'] = DEFAULT_PROXY
+        env['https_proxy'] = DEFAULT_PROXY
 
     for repo in repos:
         print(f'📥 拉取 {repo} ...')
         try:
             ret = subprocess.run(
                 ['gh', 'release', 'download', '-R', repo, '-p', '*.deb', '-D', TMP_DIR],
-                capture_output=True, text=True, timeout=300,
+                capture_output=True, text=True, timeout=300, env=env,
             )
             if ret.returncode != 0:
                 print(f'   ⚠️ 无 release 或下载失败，跳过。')
