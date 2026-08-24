@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="github" fetch="https://github.com/Roboparty/" />
+  <remote name="github-wentywenty" fetch="https://github.com/wentywenty/" />
+  <default remote="github" revision="main" sync-j="4" />
+
+  <!-- Core RoboParty source repositories. -->
+  <project name="roboparty_all" path="app/roboparty_all" />
+  <project name="roboparty_base" path="app/roboparty_base" />
+  <project name="roboparty_bms" path="app/roboparty_bms" />
+  <project name="roboparty_camera" path="app/roboparty_camera" />
+  <project name="roboparty_description" path="app/roboparty_description" />
+  <project name="roboparty_dexhand" path="app/roboparty_dexhand" />
+  <project name="roboparty_example" path="app/roboparty_example" />
+  <project name="roboparty_go" path="app/roboparty_go" />
+  <project name="roboparty_head_toolkit" path="app/roboparty_head_toolkit" />
+  <project name="roboparty_imu" path="app/roboparty_imu" revision="master" />
+  <project name="roboparty_inference" path="app/roboparty_inference" revision="master" />
+  <project name="roboparty_joystick" path="app/roboparty_joystick" />
+  <project name="roboparty_lidar" path="app/roboparty_lidar" />
+  <project name="roboparty_motors" path="app/roboparty_motors" revision="master" />
+  <project name="roboparty_rp_head" path="app/roboparty_rp_head" />
+  <project name="roboparty_rp_server" path="app/roboparty_rp_server" />
+  <project name="robopi_addon" path="app/robopi_addon" />
+  <project name="robopi_config" path="app/robopi_config" revision="trixie" />
+  <project name="robopi_firmware" path="app/robopi_firmware" />
+
+  <project name="roboparty_image" path="image/roboparty_image" />
+
+  <!-- Additional source/package repositories used by the APT routing config. -->
+  <project name="soem-deb" path="app/soem-deb" />
+  <project name="igh-deb" path="app/igh-deb" />
+  <project name="zlg-deb" path="app/zlg-deb" remote="github-wentywenty" />
+  <project name="f81601a-deb" path="app/f81601a-deb" remote="github-wentywenty" />
+  <project name="hpm-dfu-deb" path="app/hpm-dfu-deb" remote="github-wentywenty" />
+</manifest>

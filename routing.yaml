@@ -14,7 +14,7 @@ repos:
   - Roboparty/roboparty_example
   - Roboparty/roboparty_imu
   - Roboparty/roboparty_bms
-  - Roboparty/roboparty_hand
+  - Roboparty/roboparty_dexhand
   - Roboparty/roboparty_camera
   - Roboparty/roboparty_lidar
   - Roboparty/roboparty_inference
@@ -44,8 +44,8 @@ routing:
     - pattern: "roboparty-imu_*_arm64.deb"
     - pattern: "roboparty-bms_*_amd64.deb"
     - pattern: "roboparty-bms_*_arm64.deb"
-    - pattern: "roboparty-hand_*_amd64.deb"
-    - pattern: "roboparty-hand_*_arm64.deb"
+    - pattern: "roboparty-dexhand_*_amd64.deb"
+    - pattern: "roboparty-dexhand_*_arm64.deb"
     - pattern: "roboparty-inference_*_amd64.deb"
     - pattern: "roboparty-inference_*_arm64.deb"
     - pattern: "roboparty-camera_*_amd64.deb"
@@ -83,13 +83,13 @@ routing:
 
   robopi2:
     - pattern: "linux-u-boot-current-robopi2_*_arm64.deb"
-      version: 1.1.1
+      version: 1.1.2
     - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
-      version: 1.1.1
+      version: 1.1.2
     - pattern: "linux-dtb-current-rockchip-rk3588_*_arm64.deb"
-      version: 1.1.1
+      version: 1.1.2
     - pattern: "linux-headers-current-rockchip-rk3588_*_arm64.deb"
-      version: 1.1.1
+      version: 1.1.2
     - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
-      version: 1.1.1
+      version: 1.1.2
       

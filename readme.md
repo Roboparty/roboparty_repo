@@ -4,6 +4,96 @@ RoboParty APT 源自动化管理仓库。
 
 ---
 
+## 使用 repo 同步全部源码
+
+本仓库同时提供 Android `repo` 工具使用的源码清单 `manifest.xml`。它只负责
+同步各个源码仓库，不负责 APT deb 包同步；APT 流程仍使用下面的
+`routing.yaml` 和 GitHub Release。
+
+### 安装 repo 工具
+
+在 Ubuntu/Debian 上优先使用系统软件包安装：
+
+```bash
+sudo apt update
+sudo apt install -y repo git
+```
+
+检查安装是否成功：
+
+```bash
+repo version
+git --version
+```
+
+如果系统软件源没有 `repo`，可以安装 Google 官方 repo launcher：
+
+```bash
+mkdir -p "$HOME/bin"
+curl -fLo "$HOME/bin/repo" https://storage.googleapis.com/git-repo-downloads/repo
+chmod a+x "$HOME/bin/repo"
+export PATH="$HOME/bin:$PATH"
+```
+
+如果希望永久生效，将 PATH 写入 shell 配置：
+
+```bash
+printf '\nexport PATH="$HOME/bin:$PATH"\n' >> "$HOME/.bashrc"
+source "$HOME/.bashrc"
+```
+
+然后再次检查：
+
+```bash
+repo version
+```
+
+### 初始化并同步
+
+安装 `repo` 后，在一个新的源码目录执行：
+
+```bash
+mkdir -p ~/roboparty_src
+cd ~/roboparty_src
+repo init -u https://github.com/Roboparty/roboparty_repo.git \
+  -b main -m manifest.xml
+repo sync -j4
+```
+
+默认会同步到 `repo` manifest 中声明的相同目录，例如：
+
+```text
+~/roboparty_src/
+├── app/
+│   ├── roboparty_base/
+│   ├── roboparty_motors/
+│   ├── roboparty_imu/
+│   ├── roboparty_dexhand/
+│   ├── roboparty_rp_head/
+│   ├── roboparty_rp_server/
+│   ├── robopi_addon/
+│   └── ...
+└── image/
+    └── roboparty_image/
+```
+
+更新所有源码：
+
+```bash
+repo sync -j4
+```
+
+查看清单中的项目：
+
+```bash
+repo list
+```
+
+清单中的分支按各仓库当前实际使用情况配置。后续如果某个仓库切换默认
+分支，需要同步修改 `manifest.xml` 对应项目的 `revision`。
+
+---
+
 ## 第一步：子仓库发版
 
 在子仓库（如 `roboparty_motors`）中：
