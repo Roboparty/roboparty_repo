@@ -23,14 +23,14 @@
   <project name="roboparty_rp_server" path="app/roboparty_rp_server" />
   <project name="robopi_addon" path="app/robopi_addon" />
   <project name="robopi_config" path="app/robopi_config" revision="trixie" />
-  <project name="robopi_firmware" path="app/robopi_firmware" />
+  <project name="robopi_firmware" path="app/robopi_firmware" revision="master" />
 
-  <project name="roboparty_image" path="image/roboparty_image" />
+  <project name="roboparty_image" path="image/roboparty_image" revision="next" />
 
   <!-- Additional source/package repositories used by the APT routing config. -->
   <project name="soem-deb" path="app/soem-deb" />
-  <project name="igh-deb" path="app/igh-deb" />
+  <project name="igh-deb" path="app/igh-deb" revision="master" />
   <project name="zlg-deb" path="app/zlg-deb" remote="github-wentywenty" />
-  <project name="f81601a-deb" path="app/f81601a-deb" remote="github-wentywenty" />
+  <project name="f81601a-deb" path="app/f81601a-deb" remote="github-wentywenty" revision="master" />
   <project name="hpm-dfu-deb" path="app/hpm-dfu-deb" remote="github-wentywenty" />
 </manifest>
