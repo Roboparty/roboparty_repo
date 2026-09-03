@@ -2,3 +2,8 @@ env
 *.pem
 scripts/__pycache__/
 distributions
+.repo/
+bsp/
+app/
+hex/
+deb/

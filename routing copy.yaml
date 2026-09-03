@@ -1,0 +1,86 @@
+# routing.yaml
+# repos     - 所有要下载的仓库
+# routing   - 每个 suite 的包匹配规则
+#             pattern:  包名 glob，版本号位用 * 占位
+#             version:  auto = 拉最新版本, 指定数字 = 锁定版本
+#             不写 version 默认就是 auto
+
+repos:
+  - Roboparty/roboparty_base
+  - Roboparty/roboparty_description
+  - Roboparty/roboparty_start
+  - Roboparty/roboparty_motors
+  - Roboparty/roboparty_all
+  - Roboparty/roboparty_example
+  - Roboparty/roboparty_imu
+  - Roboparty/roboparty_bms
+  - Roboparty/roboparty_dexhand
+  - Roboparty/roboparty_camera
+  - Roboparty/roboparty_lidar
+  - Roboparty/roboparty_inference
+  - Roboparty/roboparty_rp_server
+  - Roboparty/roboparty_rp_head
+  - Roboparty/robopi_config
+  - Roboparty/robopi_addon
+  - Roboparty/SOEM
+  # - Roboparty/igh-deb
+  - Roboparty/roboparty_build
+
+routing:
+  common:
+    - pattern: "roboparty-base_*_all.deb"
+    - pattern: "roboparty-description_*_all.deb"
+    - pattern: "roboparty-start_*_all.deb"
+    - pattern: "roboparty-example_*_all.deb"
+    - pattern: "roboparty-all_*_all.deb"
+
+    - pattern: "roboparty-motors_*_amd64.deb"
+    - pattern: "roboparty-motors_*_arm64.deb"
+    - pattern: "roboparty-imu_*_amd64.deb"
+    - pattern: "roboparty-imu_*_arm64.deb"
+    - pattern: "roboparty-bms_*_amd64.deb"
+    - pattern: "roboparty-bms_*_arm64.deb"
+    - pattern: "roboparty-dexhand_*_amd64.deb"
+    - pattern: "roboparty-dexhand_*_arm64.deb"
+    - pattern: "roboparty-inference_*_amd64.deb"
+    - pattern: "roboparty-inference_*_arm64.deb"
+    - pattern: "roboparty-camera_*_amd64.deb"
+    - pattern: "roboparty-camera_*_arm64.deb"
+    - pattern: "roboparty-lidar_*_amd64.deb"
+    - pattern: "roboparty-lidar_*_arm64.deb"
+
+    - pattern: "roboparty-rp-server_*_all.deb"
+    - pattern: "roboparty-rp-head_*_amd64.deb"
+    - pattern: "roboparty-rp-head_*_arm64.deb"
+
+    - pattern: "libsoem-dev_*_amd64.deb"
+    - pattern: "libsoem-dev_*_arm64.deb"
+    - pattern: "robopi-config_*_arm64.deb"
+    - pattern: "robopi-addon_*_arm64.deb"
+    # - pattern: "ethercat-igh_*_amd64.deb"
+    # - pattern: "ethercat-igh_*_arm64.deb"
+
+  # robopi1:
+  #   - pattern: "linux-u-boot-current-robopi1_*_arm64.deb"
+  #     version: 1.2.8
+  #   - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
+  #     version: 1.2.8
+  #   - pattern: "linux-dtb-current-rockchip-rk3588_*_arm64.deb"
+  #     version: 1.2.8
+  #   - pattern: "linux-headers-current-rockchip-rk3588_*_arm64.deb"
+  #     version: 1.2.8
+  #   - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
+  #     version: 1.2.8
+
+  robopi2:
+    - pattern: "linux-u-boot-current-robopi2_*_arm64.deb"
+      version: 1.1.3
+    - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.1.3
+    - pattern: "linux-dtb-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.1.3
+    - pattern: "linux-headers-current-rockchip-rk3588_*_arm64.deb"
+      version: 1.1.3
+    - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
+      version: 1.1.3
+      

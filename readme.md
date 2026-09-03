@@ -53,8 +53,7 @@ repo version
 安装 `repo` 后，在一个新的源码目录执行：
 
 ```bash
-mkdir -p ~/roboparty_src
-cd ~/roboparty_src
+http_proxy=http://10.43.0.100:8080 https_proxy=http://10.43.0.100:8080 repo init -u https://github.com/Roboparty/roboparty_repo.git -b main -m manifest.xml --repo-url=https://mirrors.tuna.tsinghua.edu.cn/git/git-repo
 repo init -u https://github.com/Roboparty/roboparty_repo.git \
   -b main -m manifest.xml
 repo sync -j4
@@ -63,7 +62,6 @@ repo sync -j4
 默认会同步到 `repo` manifest 中声明的相同目录，例如：
 
 ```text
-~/roboparty_src/
 ├── app/
 │   ├── roboparty_base/
 │   ├── roboparty_motors/
