@@ -20,12 +20,15 @@
   <project name="roboparty_inference" path="deb/roboparty_inference" revision="master" />
   <project name="roboparty_lidar" path="deb/roboparty_lidar" />
   <project name="roboparty_motors" path="deb/roboparty_motors" revision="master" />
-  <project name="roboparty_rp_head" path="deb/roboparty_rp_head" />
+  <project name="roboparty_onnxruntime" path="deb/roboparty_onnxruntime" />
+  <project name="roboparty_deb_template" path="deb/roboparty_deb_template" />
+  <!-- <project name="roboparty_rp_head" path="deb/roboparty_rp_head" /> -->
   <project name="roboparty_rp_server" path="deb/roboparty_rp_server" />
 
   <!-- Debian package repositories. -->
   <project name="robopi_addon" path="deb/robopi_addon" />
   <project name="robopi_config" path="deb/robopi_config" revision="trixie" />
+  <project name="robopi_analyze" path="deb/robopi_analyze" />
   <project name="SOEM" path="deb/SOEM" />
   <!-- <project name="igh-deb" path="deb/igh-deb" revision="master" /> -->
 
