@@ -1,4 +1,0 @@
-[submodule "image/roboparty_image"]
-	path = image/roboparty_image
-	url = https://github.com/Roboparty/roboparty_image.git
-	branch = next
