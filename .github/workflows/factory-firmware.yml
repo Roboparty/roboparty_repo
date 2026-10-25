@@ -1,0 +1,100 @@
+name: Factory Firmware Bundle
+
+on:
+  push:
+    tags:
+      - 'factory-v*'
+
+permissions:
+  contents: write
+
+env:
+  BUNDLE_VERSION: ${{ github.ref_name }}
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Collect firmware
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="${BUNDLE_VERSION#factory-v}"
+          python3 factory/collect_firmware.py \
+            --manifest factory/firmware-manifest.json \
+            --output dist \
+            --version "$version"
+
+      - name: Upload firmware bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-bundle
+          path: dist
+          if-no-files-found: error
+          retention-days: 14
+
+  build-exe:
+    needs: collect
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download firmware bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware-bundle
+          path: dist
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Resolve version
+        shell: pwsh
+        run: |
+          $version = "$env:BUNDLE_VERSION" -replace '^factory-v', ''
+          "BUNDLE_VERSION=$version" >> $env:GITHUB_ENV
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (!(Test-Path $iscc)) {
+            throw "ISCC.exe not found: $iscc"
+          }
+          $dist = Join-Path $env:GITHUB_WORKSPACE "dist"
+          & $iscc "/DBundleVersion=$env:BUNDLE_VERSION" "/DDistDir=$dist" "factory\factory.iss"
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+          Get-ChildItem "$dist\RoboParty-Firmware-*.exe" | ForEach-Object {
+            Write-Host $_.FullName
+          }
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: factory-firmware-exe
+          path: dist/RoboParty-Firmware-*.exe
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/factory-v')
+    needs: build-exe
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download installer
+        uses: actions/download-artifact@v4
+        with:
+          name: factory-firmware-exe
+          path: release
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.exe
+          generate_release_notes: true

@@ -1,0 +1,38 @@
+{
+  "name": "RoboParty Factory Firmware",
+  "sources": [
+    {
+      "category": "motor",
+      "repository": "Roboparty/roboparty_motors",
+      "ref": "v2.3.0",
+      "patterns": [
+        "firmware/*.lsepbin"
+      ]
+    },
+    {
+      "category": "bms",
+      "repository": "Roboparty/roboparty_bms",
+      "ref": "v1.6.0",
+      "patterns": [
+        "firmware/*.bin"
+      ]
+    },
+    {
+      "category": "imu",
+      "repository": "Roboparty/roboparty_imu",
+      "ref": "be83bf7ce2e0854be7e9b0f3cb2541dd65fcbe95",
+      "patterns": [
+        "firmware/*.bin",
+        "firmware/*.hex"
+      ]
+    },
+    {
+      "category": "hpm",
+      "repository": "Roboparty/roboparty_analyze",
+      "ref": "v1.0.10",
+      "patterns": [
+        "etc/firmware/*.bin"
+      ]
+    }
+  ]
+}

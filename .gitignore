@@ -2,6 +2,7 @@ env
 *.pem
 scripts/__pycache__/
 scripts/key.md
+dist
 distributions
 .repo/
 bsp/
