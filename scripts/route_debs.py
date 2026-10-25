@@ -29,18 +29,19 @@ def _deb_field(deb_path: str, field: str) -> str:
         return "?"
 
 
-DEFAULT_PROXY = 'http://127.0.0.1:7890'
-
-
 def download_all(repos):
     if os.path.exists(TMP_DIR):
         shutil.rmtree(TMP_DIR)
     os.makedirs(TMP_DIR)
 
+    # Do not inject a default localhost proxy: CI servers and the APT host may
+    # have direct GitHub access. Set ROUTE_DEBS_PROXY (or HTTPS_PROXY) only when
+    # an outbound proxy is actually required.
     env = dict(os.environ)
-    if not any(k in os.environ for k in ('HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy')):
-        env['HTTPS_PROXY'] = DEFAULT_PROXY
-        env['https_proxy'] = DEFAULT_PROXY
+    proxy = os.environ.get('ROUTE_DEBS_PROXY')
+    if proxy:
+        env['HTTPS_PROXY'] = proxy
+        env['https_proxy'] = proxy
 
     for repo in repos:
         print(f'📥 拉取 {repo} ...')
@@ -70,12 +71,14 @@ def route_all(routing, incoming):
     for basename in debs:
         src = os.path.join(TMP_DIR, basename)
         dests = []
+        matched_pattern = False
 
         for suite in suites:
             for entry in routing[suite]:
                 p = entry['pattern']
                 ver = entry.get('version', 'auto')
                 if fnmatch.fnmatch(basename, p):
+                    matched_pattern = True
                     if ver != 'auto' and ver not in basename:
                         continue
                     if suite not in dests:
@@ -83,8 +86,11 @@ def route_all(routing, incoming):
                     break
 
         if not dests:
-            dests.append('common')
-            print(f'   ⚠️ 无匹配规则，落入 common: {basename}')
+            if matched_pattern:
+                print(f'   ⏭️ 版本不符合 routing 规则，跳过: {basename}')
+            else:
+                print(f'   ⏭️ 无匹配规则，跳过: {basename}')
+            continue
 
         for s in dests:
             print(f'   📍 {basename} -> {s}')

@@ -144,7 +144,7 @@ route_debs.py  → 从 GitHub Release 下载 .deb，按 routing.yaml 分拣到 /
 bot_inject.sh  → 调用 reprepro 将 /srv/apt-incoming/ 入库到 /srv/apt/
 ```
 
-服务器重建详见 [server.md](server.md)。
+服务器重建详见 [scripts/server.md](scripts/server.md)。
 
 ### routing.yaml 配置
 
@@ -201,9 +201,9 @@ roboparty_repo/
 ├── scripts/
 │   ├── route_debs.py                        # 下载并分拣 deb
 │   ├── bot_inject.sh                        # reprepro 入库脚本
-│   └── dashboard.py                         # 看板脚本
+│   ├── dashboard.py                         # 看板脚本
+│   └── server.md                            # APT/Winget 服务器与构建说明
 ├── routing.yaml                             # 仓库及路由规则
 ├── distributions                            # reprepro 仓库配置（参考用）
-├── server.md                                # APT 服务器重建指南
 └── env                                      # 代理等环境变量（gitignore）
 ```

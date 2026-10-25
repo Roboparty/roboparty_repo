@@ -21,10 +21,11 @@ repos:
   - Roboparty/roboparty_rp_server
   - Roboparty/roboparty_onnxruntime
   # - Roboparty/roboparty_rp_head
-  - Roboparty/robopi_config
+  - Roboparty/robopi_TUI
   - Roboparty/robopi_addon
-  - Roboparty/robopi_analyze
-  - Roboparty/SOEM
+  - Roboparty/roboparty_analyze
+  - Roboparty/adbd
+  - Roboparty/libsoem
   # - Roboparty/igh-deb
   - Roboparty/roboparty_build
 
@@ -60,9 +61,12 @@ routing:
 
     - pattern: "libsoem-dev_*_amd64.deb"
     - pattern: "libsoem-dev_*_arm64.deb"
-    - pattern: "robopi-config_*_arm64.deb"
+    - pattern: "robopi-tui_*_arm64.deb"
     - pattern: "robopi-addon_*_arm64.deb"
-    - pattern: "robopi-analyze_*_all.deb"
+    - pattern: "adbd_*_amd64.deb"
+    - pattern: "adbd_*_arm64.deb"
+    - pattern: "roboparty-analyze_*_all.deb"
+      version: 1.0.14
     # - pattern: "ethercat-igh_*_amd64.deb"
     # - pattern: "ethercat-igh_*_arm64.deb"
 
@@ -78,14 +82,18 @@ routing:
   #   - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
   #     version: 1.2.8
 
-  # robopi2:
-  #   - pattern: "linux-u-boot-current-robopi2_*_arm64.deb"
-  #     version: 1.1.3
-  #   - pattern: "linux-image-current-rockchip-rk3588_*_arm64.deb"
-  #     version: 1.1.3
-  #   - pattern: "linux-dtb-current-rockchip-rk3588_*_arm64.deb"
-  #     version: 1.1.3
-  #   - pattern: "linux-headers-current-rockchip-rk3588_*_arm64.deb"
-  #     version: 1.1.3
-  #   - pattern: "linux-image-current-rockchip-rk3588-dbg_*_arm64.deb"
-  #     version: 1.1.3
+  robopi2:
+    # 对应 Roboparty/roboparty_build/.github/workflows/build-kernel.yml。
+    # 下载源是 Release 附件；Actions artifact 不会被 route_debs.py 下载。
+    # 保留规则等待 BSP 发布，不写 version 默认取最新 Release。
+    # arm64 后的 * 同时兼容 _arm64.deb 和 _arm64__<构建标识>.deb。
+    - pattern: "linux-image-current-rockchip64_*_arm64*.deb"
+    - pattern: "linux-dtb-current-rockchip64_*_arm64*.deb"
+    - pattern: "linux-headers-current-rockchip64_*_arm64*.deb"
+    - pattern: "linux-libc-dev-current-rockchip64_*_arm64*.deb"
+    # u-boot 需要该 repo 另行产出后再启用（当前 kernel-only workflow 不产）：
+    # - pattern: "linux-u-boot-robopi2-current_*_arm64.deb"
+
+    # adbd 已作为通用包放入 common。
+    # 保留 EtherCAT 路由；当前工作流未构建/收集此包，需后续启用产出。
+    - pattern: "ethercat-dev_*_arm64.deb"
