@@ -156,7 +156,7 @@ def main() -> int:
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=Path("factory/firmware-manifest.json"),
+        default=Path("scripts/firmware-manifest.json"),
     )
     parser.add_argument("--output", type=Path, default=Path("dist"))
     parser.add_argument("--version", default="0.0.0")
