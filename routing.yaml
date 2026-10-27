@@ -66,7 +66,7 @@ routing:
     - pattern: "adbd_*_amd64.deb"
     - pattern: "adbd_*_arm64.deb"
     - pattern: "roboparty-analyze_*_all.deb"
-      version: 1.0.14
+     
     # - pattern: "ethercat-igh_*_amd64.deb"
     # - pattern: "ethercat-igh_*_arm64.deb"
 
